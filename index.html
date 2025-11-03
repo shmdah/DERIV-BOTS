@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trader's Hub</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configure Tailwind to use Inter font -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-dark': '#1A1A1A',
+                        'brand-gray': '#2A2A2A',
+                        'brand-red': '#FF444F',
+                        'brand-red-dark': '#E03B44',
+                        'brand-red-darker': '#C0323A',
+                        'brand-green': '#00A79E', // This is the green/teal color
+                        'brand-green-dark': '#008C82',
+                        'brand-green-darker': '#007068',
+                        'brand-blue': '#3B5998',
+                    }
+                },
+            },
+        };
+    </script>
+    
+    <style>
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #4A4A4A;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-track {
+            background-color: #1A1A1A;
+        }
+        
+        /* Set a consistent dark background for the whole page */
+        html, body {
+            background-color: #141414;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-200 bg-[#141414] flex justify-center items-start">
+
+    <!-- Main container replicating a mobile app view -->
+    <div class="w-full max-w-md bg-brand-dark min-h-screen shadow-lg">
+
+        <!-- Header Navigation -->
+        <header class="flex items-center justify-between p-4 bg-brand-dark border-b border-gray-700">
+            <!-- Hamburger Menu Icon -->
+            <button class="text-gray-400 hover:text-white transition-colors rounded-md p-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+            
+            <!-- Logo -->
+            <div class="w-8 h-8 bg-brand-red rounded-full flex items-center justify-center text-white font-bold text-lg">
+                d
+            </div>
+            
+            <!-- Notification Icon -->
+            <button class="relative text-gray-400 hover:text-white transition-colors rounded-md p-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341A6.002 6.002 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+                <!-- Notification Badge -->
+                <span class="absolute top-0 right-0 w-4 h-4 bg-brand-red text-white text-xs font-bold rounded-full flex items-center justify-center border-2 border-brand-dark">
+                    5
+                </span>
+            </button>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="p-4 pb-16">
+            <h1 class="text-2xl font-bold text-white mb-2">Trader's Hub</h1>
+            
+            <!-- Account Switcher -->
+            <div class="relative inline-block">
+                <!-- 'Real' Account Dropdown Button - UPDATED -->
+                <button id="accountToggleButton" class="flex items-center space-x-2 border border-brand-green rounded-lg px-3 py-1.5 text-brand-green hover:bg-gray-800 transition-colors">
+                    <span id="accountButtonText" class="text-lg font-semibold">Real</span>
+                    <svg id="accountButtonChevron" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div id="accountDropdown" class="absolute left-0 mt-2 w-72 bg-brand-gray rounded-lg shadow-xl z-10 hidden border border-gray-700">
+                    <div class="p-2">
+                        <!-- Real Account Option -->
+                        <button onclick="selectAccount('real')" class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-700 transition-colors">
+                            <div class="flex items-center">
+                                <div class="p-2 bg-brand-green/20 rounded-lg mr-3">
+                                    <svg class="w-6 h-6 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0c-1.657 0-3-.895-3-2s1.343-2 3-2 3-.895 3-2-1.343-2-3-2m0 8c-1.11 0-2.08-.402-2.599-1M12 16v1m0-1v-8"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-white">Real</p>
+                                    <p class="text-sm text-gray-400">$26,708.00</p>
+                                </div>
+                            </div>
+                            <svg id="check-real" class="w-5 h-5 text-brand-green" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Demo Account Option -->
+                        <button onclick="selectAccount('demo')" class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-700 transition-colors mt-1">
+                            <div class="flex items-center">
+                                <div class="p-2 bg-gray-500/20 rounded-lg mr-3">
+                                    <!-- Simple icon for demo -->
+                                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-white">Demo</p>
+                                    <p class="text-sm text-gray-400">$10,000.00</p>
+                                </div>
+                            </div>
+                            <svg id="check-demo" class="w-5 h-5 text-brand-green hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Balance Display - UPDATED -->
+            <div class="text-center my-6">
+                <h2 id="mainBalanceDisplay" class="text-4xl font-bold text-brand-green tracking-tight">$26,708.00 USD</h2>
+            </div>
+            
+            <!-- Tabs: Options / CFDs -->
+            <div class="flex border-b border-gray-700">
+                <button id="optionsTab" class="flex-1 text-center py-3 font-semibold border-b-2 border-brand-red text-white transition-colors" onclick="showTab('options')">
+                    Options
+                </button>
+                <button id="cfdsTab" class="flex-1 text-center py-3 font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-colors" onclick="showTab('cfds')">
+                    CFDs
+                </button>
+            </div>
+            
+            <!-- Tab Content -->
+            <div class="mt-4">
+                <!-- Options Content -->
+                <div id="optionsContent">
+                    <p class="text-gray-400 mb-6">
+                        Predict the market, profit if you're right, risk only what you put in. 
+                        <a href="#" class="text-brand-red font-semibold hover:underline">Learn more</a>
+                    </p>
+                    
+                    <!-- US Dollar Card -->
+                    <div class="bg-brand-gray rounded-xl p-4 flex items-center justify-between mb-6 shadow-md">
+                        <div class="flex items-center space-x-3">
+                            <!-- US Flag Emoji -->
+                            <span class="text-4xl">🇺🇸</span>
+                            <div>
+                                <h3 id="usdCardBalanceDisplay" class="text-lg font-bold text-white">$26,708.00 USD</h3>
+                                <p class="text-sm text-gray-400">US Dollar</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <!-- Interactive Deposit Button -->
+                            <button class="bg-brand-green text-white font-bold py-2 px-5 rounded-lg transition-all
+                                           hover:bg-brand-green-dark active:bg-brand-green-darker
+                                           focus:outline-none focus:ring-2 focus:ring-brand-green focus:ring-opacity-50">
+                                Deposit
+                            </button>
+                            <button class="text-gray-400 hover:text-white rounded-md p-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Platform List -->
+                    <div class="space-y-4">
+                        
+                        <!-- Deriv Trader -->
+                        <div class="bg-brand-gray rounded-xl p-4 flex items-center shadow-md">
+                            <div class="w-12 h-12 bg-brand-red rounded-lg flex items-center justify-center text-white font-bold text-2xl mr-4">
+                                DT
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="font-bold text-white">Deriv Trader</h4>
+                                <p class="text-sm text-gray-400">The options and multipliers trading platform.</p>
+                            </div>
+                            <!-- Interactive Open Button -->
+                            <button classTwo="bg-brand-red text-white font-bold py-2 px-6 rounded-lg ml-4 transition-all
+                                           hover:bg-brand-red-dark active:bg-brand-red-darker
+                                           focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-opacity-50">
+                                Open
+                            </button>
+                        </div>
+                        
+                        <!-- Deriv Bot -->
+                        <div class="bg-brand-gray rounded-xl p-4 flex items-center shadow-md">
+                            <div class="w-12 h-12 bg-brand-red rounded-lg flex items-center justify-center text-white font-bold text-2xl mr-4">
+                                DB
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="font-bold text-white">Deriv Bot</h4>
+                                <p class="text-sm text-gray-400">The ultimate bot trading platform.</p>
+                            </div>
+                            <!-- Interactive Open Button -->
+                            <button class="bg-brand-red text-white font-bold py-2 px-6 rounded-lg ml-4 transition-all
+                                           hover:bg-brand-red-dark active:bg-brand-red-darker
+                                           focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-opacity-50">
+                                Open
+                            </button>
+                        </div>
+
+                        <!-- SmartTrader -->
+                        <div class="bg-brand-gray rounded-xl p-4 flex items-center shadow-md">
+                            <div class="w-12 h-12 bg-brand-blue rounded-lg flex items-center justify-center text-white font-bold text-2xl mr-4">
+                                ST
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="font-bold text-white">SmartTrader</h4>
+                                <p class="text-sm text-gray-400">The legacy options trading platform.</p>
+                            </div>
+                            <!-- Interactive Open Button -->
+                            <button class="bg-brand-red text-white font-bold py-2 px-6 rounded-lg ml-4 transition-all
+                                           hover:bg-brand-red-dark active:bg-brand-red-darker
+                                           focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-opacity-50">
+                                Open
+                            </signature>
+                        </div>
+                        
+                        <!-- Deriv GO -->
+                        <div class="bg-brand-gray rounded-xl p-4 flex items-center shadow-md">
+                            <div class="w-12 h-12 bg-brand-red rounded-lg flex items-center justify-center text-white font-bold text-2xl mr-4">
+                                GO
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="font-bold text-white">Deriv GO</h4>
+                                <p class="text-sm text-gray-400">The mobile app for trading.</p>
+                            </div>
+                            <!-- Interactive Open Button -->
+                            <button class="bg-brand-red text-white font-bold py-2 px-6 rounded-lg ml-4 transition-all
+                                           hover:bg-brand-red-dark active:bg-brand-red-darker
+                                           focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-opacity-50">
+                                Open
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <!-- CFDs Content (Hidden by default) -->
+                <div id="cfdsContent" class="hidden">
+                    <div class="text-center py-10">
+                        <h3 class="text-xl font-semibold text-white">CFDs Content</h3>
+                        <p class="text-gray-400">Content for the CFDs tab goes here.</p>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+    
+    <script>
+        // JavaScript for Tab Functionality
+        const optionsTab = document.getElementById('optionsTab');
+        const cfdsTab = document.getElementById('cfdsTab');
+        const optionsContent = document.getElementById('optionsContent');
+        const cfdsContent = document.getElementById('cfdsContent');
+
+        function showTab(tabName) {
+            if (tabName === 'options') {
+                // Show Options
+                optionsContent.classList.remove('hidden');
+                cfdsContent.classList.add('hidden');
+                
+                // Update Tab Styles
+                optionsTab.classList.add('border-brand-red', 'text-white');
+                optionsTab.classList.remove('border-transparent', 'text-gray-500');
+                
+                cfdsTab.classList.add('border-transparent', 'text-gray-500');
+                cfdsTab.classList.remove('border-brand-red', 'text-white');
+                
+            } else if (tabName === 'cfds') {
+                // Show CFDs
+                cfdsContent.classList.remove('hidden');
+                optionsContent.classList.add('hidden');
+                
+                // Update Tab Styles
+                cfdsTab.classList.add('border-brand-red', 'text-white');
+                cfdsTab.classList.remove('border-transparent', 'text-gray-500');
+                
+                optionsTab.classList.add('border-transparent', 'text-gray-500');
+                optionsTab.classList.remove('border-brand-red', 'text-white');
+            }
+        }
+
+        // --- Account Switching Logic ---
+        const accountToggleButton = document.getElementById('accountToggleButton');
+        const accountDropdown = document.getElementById('accountDropdown');
+        const accountButtonText = document.getElementById('accountButtonText');
+        const accountButtonChevron = document.getElementById('accountButtonChevron');
+        const mainBalanceDisplay = document.getElementById('mainBalanceDisplay');
+        const usdCardBalanceDisplay = document.getElementById('usdCardBalanceDisplay');
+
+        // Store account details
+        const accounts = {
+            real: {
+                name: 'Real',
+                balance: '$26,708.00',
+                borderColor: 'border-brand-green',
+                textColor: 'text-brand-green',
+            },
+            demo: {
+                name: 'Demo',
+                balance: '$10,000.00',
+                borderColor: 'border-gray-500',
+                textColor: 'text-gray-400',
+            }
+        };
+
+        let currentAccount = 'real'; // Start with real account
+
+        // Toggle dropdown visibility
+        accountToggleButton.addEventListener('click', () => {
+            accountDropdown.classList.toggle('hidden');
+            // Rotate chevron
+            accountButtonChevron.classList.toggle('rotate-180');
+        });
+
+        function selectAccount(accountType) {
+            if (currentAccount === accountType) {
+                accountDropdown.classList.add('hidden');
+                accountButtonChevron.classList.remove('rotate-180');
+                return; // No change
+            }
+
+            const newAccount = accounts[accountType];
+            const oldAccount = accounts[currentAccount];
+
+            // 1. Update main balance
+            mainBalanceDisplay.innerText = `${newAccount.balance} USD`;
+            // Update main balance color
+            mainBalanceDisplay.classList.remove(oldAccount.textColor); // Use textColor
+            mainBalanceDisplay.classList.add(newAccount.textColor); // Use textColor
+
+            // 2. Update USD card balance
+            usdCardBalanceDisplay.innerText = `${newAccount.balance} USD`;
+
+            // 3. Update toggle button text
+            accountButtonText.innerText = newAccount.name;
+            
+            // 4. Update toggle button styling
+            accountToggleButton.classList.remove(oldAccount.borderColor, oldAccount.textColor);
+            accountToggleButton.classList.add(newAccount.borderColor, newAccount.textColor);
+            
+            // 5. Update active checkmark in dropdown
+            document.getElementById(`check-${currentAccount}`).classList.add('hidden');
+            document.getElementById(`check-${accountType}`).classList.remove('hidden');
+
+            // 6. Hide dropdown
+            accountDropdown.classList.add('hidden');
+            accountButtonChevron.classList.remove('rotate-180');
+
+            // 7. Update current account
+            currentAccount = accountType;
+        }
+
+        // Close dropdown if clicking outside
+        window.addEventListener('click', function(e) {
+          if (accountDropdown && !accountToggleButton.contains(e.target) && !accountDropdown.contains(e.target)) {
+            accountDropdown.classList.add('hidden');
+            accountButtonChevron.classList.remove('rotate-180');
+          }
+        });
+    </script>
+
+</body>
+</html>
+
